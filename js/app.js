@@ -28,7 +28,8 @@ function InitScene() {
     
     // Création du contrôle de la caméra
     _orbite = new THREE.OrbitControls(_camera, _rendu.domElement);
-
+    
+    //Alix la grosse salope 
     
 
     
