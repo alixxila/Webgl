@@ -73,6 +73,30 @@ var _backGroundMat = new THREE.MeshBasicMaterial (
 
 )
 
+// Création de la variable pour charger le model .MTL
+const mtlLoader1 = new THREE.MTLLoader();
+// Chargement du model .MTL depuis la variable modelName et déclaration de la fonction objectMaterial
+mtlLoader1.load('./assets/models/' + modelName + '.mtl', function (objectMaterial) {
+    // Prechargement de l'objet
+    objectMaterial.preload();
+    // Project de l'ombre de facon dynamique
+    objectMaterial.castShadow = true;
+    // Reception de l'ombre
+    objectMaterial.receiveShadow = true;
+    // Chargement de l'objet 3D
+    const objLoader1 = new THREE.OBJLoader();
+    objLoader1.setMaterials(objectMaterial);
+    objLoader1.load('./assets/models/' + modelName + '.obj', function (object) {
+        object.traverse(function (child) {
+            if (child instanceof THREE.Mesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+        });
+        object.name = modelName;
+        _scene.add(object); 
+        }); 
+    });
 
 
 
