@@ -8,6 +8,10 @@ var _rendu;
 var _camera;
 var _scene; 
 var _orbite;
+var _resources = '/assets/models/'
+var _materielAcharger = [
+    ''
+];
 
 // Variable pour aller chercher texture de la Lune
 var _texturePlanet = "https://images.unsplash.com/photo-1462331321792-cc44368b8894?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=953&q=80"
@@ -76,6 +80,9 @@ var _backGroundMat = new THREE.MeshBasicMaterial (
 
 // Création de la variable pour charger le model .MTL
 const mtlLoader1 = new THREE.MTLLoader();
+const mtlLoader2 = new THREE.MTLLoader();
+const mtlLoader3 = new THREE.MTLLoader();
+const mtlLoader3 = new THREE.MTLLoader();
 // Chargement du model .MTL depuis la variable modelName et déclaration de la fonction objectMaterial
 mtlLoader1.load('./assets/models/' + modelName + '.mtl', function (objectMaterial) {
     // Prechargement de l'objet
@@ -98,11 +105,6 @@ mtlLoader1.load('./assets/models/' + modelName + '.mtl', function (objectMateria
         _scene.add(object); 
         }); 
     });
-
-
-
-
-
 
 
 
