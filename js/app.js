@@ -1,7 +1,5 @@
 /////////////////////////////////////////////////////////////////////////TP ThreeJS - Création de Scene////////////////////////////////////////////////////////////////////////////// 
 
-
-
 // Déclaration des variables globales
 var _rendu; 
 var _camera;
@@ -9,9 +7,9 @@ var _scene;
 var _orbite;
 
 // Variable pour aller chercher texture de la Lune
-var _texturePlanet = "https://images.unsplash.com/photo-1462331321792-cc44368b8894?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=953&q=80"
-var _motionURL = "https://images.unsplash.com/photo-1451186859696-371d9477be93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=873&q=80"
-var _worldURL = "https://images.unsplash.com/photo-1465101162946-4377e57745c3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1178&q=80"
+var _texturePlanet = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/17271/lroc_color_poles_1k.jpg"
+var _motionURL = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/17271/ldem_3_8bit.jpg"
+var _worldURL = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/17271/hipp8_s.jpg"
 
 
 
@@ -32,7 +30,7 @@ var _worldURL = "https://images.unsplash.com/photo-1465101162946-4377e57745c3?ix
     document.body.appendChild(_rendu.domElement);
 
     //Notre sphère qui sera la Lune/Planète
-    var _moonSphere = new THREE.SphereGeometry(1,50,100);
+    var _moonSphere = new THREE.SphereGeometry(7,50,4000);
 
     // Va nous permettre d'appliquer des textures 
     var _textureLoader = new THREE.TextureLoader();
@@ -46,14 +44,14 @@ var _worldURL = "https://images.unsplash.com/photo-1465101162946-4377e57745c3?ix
     // Création d'un matérial pour modeler notre Sphere
     var _material = new THREE.MeshPhongMaterial(
     {
-        color: 0xffffff, //Couleur du material
-        map: _texture, // Application de la texture de la Lune
-        displacementMap: _motionMap, // Effet de relief
-        displacementScale: 0.06,
+        color: 0x9C2E35, //Couleur du material / Mars
+        map: _texture, // Application de la texture de Mars
+       displacementMap: _motionMap, // Effet de relief
+        displacementScale: 0.06, // Imperfection de la lune à utiliser pour faire des météorites
         bumpMap: _motionMap,
-        bumpScale: 0.04, // Je sais pas vraiment ce que c'est mais si ça dépasse 0.70 c'est vraiment horrible
-        reflectivity:0, //Reflet 
-        shininess:1, //Brillance 
+        bumpScale: 0.09, // Je sais pas vraiment ce que c'est mais si ça dépasse 0.70 c'est vraiment horrible
+        reflectivity:1 //Reflet 
+        //shininess:0.01, //Brillance 
     } 
 );
 
@@ -64,7 +62,7 @@ var _moon = new THREE.Mesh( _moonSphere, _material);
 //Création du "Soleil", une light puissante qui émet que d'une seule direction
 const _Soleil = new THREE.DirectionalLight(0xFFFFFF, 2); 
 //La position de la light 
-_Soleil.position.set(-100, 10,50);
+_Soleil.position.set(-100, 100,50);
 //On ajoute la light à la scene
 _scene.add(_Soleil);
 /*
@@ -79,8 +77,7 @@ var _backGround = new THREE.SphereGeometry(1000,60,60);
 var _backGroundMat = new THREE.MeshBasicMaterial (
     {   
     color: 0xffffff,
-    map: _worldTexture ,
-    side: THREE.Backside
+    map: _worldTexture,
     }   
 
 );
@@ -89,17 +86,17 @@ var _world = new THREE.Mesh ( _backGround, _backGroundMat );
 _scene.add( _world );
 
 _scene.add( _moon );
-_camera.position.z = 5; 
+_camera.position.z = 20; 
 
 _moon.rotation.x = 3.14*0.2;
 _moon.rotation.y = 3.14*1.54;
 
 function animate(){
     requestAnimationFrame(animate);
-    _moon.rotation.x = 0.0002;
-    _moon.rotation.y = 0.0002;
-    _world.rotation.x = 0.0002;
-    _world.rotation.y = 0.0005;
+    _moon.rotation.x = 0.02;
+    _moon.rotation.y = 0.02;
+    _world.rotation.x = 0.02;
+    _world.rotation.y = 0.05;
 
 
     _rendu.render( _scene, _camera);
@@ -114,6 +111,20 @@ function onResize() {
   
   window.addEventListener('resize', onResize, false);
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 // Création de la variable pour charger le model .MTL
