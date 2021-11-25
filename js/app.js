@@ -67,7 +67,9 @@ _Soleil.position.set(-100, 10,50);
 //On ajoute la light à la scene
 _scene.add(_Soleil);
 
+//Création du background de la scene 
 var _backGround = new THREE._moonSphere(10,60,60);
+// Ajout d'un matérial à la scène 
 var _backGroundMat = new THREE.MeshBasicMaterial (
 
 )
