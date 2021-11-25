@@ -1,5 +1,7 @@
 /////////////////////////////////////////////////////////////////////////TP ThreeJS - Création de Scene////////////////////////////////////////////////////////////////////////////// 
 
+
+
 // Déclaration des variables globales
 var _rendu; 
 var _camera;
@@ -60,19 +62,60 @@ var _moon = new THREE.Mesh( _moonSphere, _material);
 
 
 //Création du "Soleil", une light puissante qui émet que d'une seule direction
-const _Soleil = new THREE.DirectionalLight(0xFFFFFF, 1); 
+const _Soleil = new THREE.DirectionalLight(0xFFFFFF, 2); 
 //La position de la light 
 _Soleil.position.set(-100, 10,50);
 //On ajoute la light à la scene
 _scene.add(_Soleil);
+/*
+
+AJOUTER LIGHT POUR EFFET DARK SIDE OF THE MOON 
+
+*/
 
 //Création du background de la scene 
-var _backGround = new THREE._moonSphere(10,60,60);
+var _backGround = new THREE.SphereGeometry(1000,60,60);
 // Ajout d'un matérial à la scène 
 var _backGroundMat = new THREE.MeshBasicMaterial (
+    {   
+    color: 0xffffff,
+    map: _worldTexture ,
+    side: THREE.Backside
+    }   
 
-)
+);
 
+var _world = new THREE.Mesh ( _backGround, _backGroundMat );
+_scene.add( _world );
+
+_scene.add( _moon );
+_camera.position.z = 5; 
+
+_moon.rotation.x = 3.14*0.2;
+_moon.rotation.y = 3.14*1.54;
+
+function animate(){
+    requestAnimationFrame(animate);
+    _moon.rotation.x = 0.0002;
+    _moon.rotation.y = 0.0002;
+    _world.rotation.x = 0.0002;
+    _world.rotation.y = 0.0005;
+
+
+    _rendu.render( _scene, _camera);
+}
+animate()
+
+function onResize() {
+    _camera.aspect = window.innerWidth / window.innerHeight;
+    _camera.updateProjectionMatrix();
+    _rendu.setSize(window.innerWidth, window.innerHeight);
+  }
+  
+  window.addEventListener('resize', onResize, false);
+  
+
+/*
 // Création de la variable pour charger le model .MTL
 const mtlLoader1 = new THREE.MTLLoader();
 // Chargement du model .MTL depuis la variable modelName et déclaration de la fonction objectMaterial
