@@ -5,6 +5,10 @@ var _rendu;
 var _camera;
 var _scene; 
 var _orbite;
+var _resources = '/assets/models/'
+var _materielAcharger = [
+    ''
+];
 
 // Variable pour aller chercher texture de la Lune
 var _texturePlanet = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/17271/lroc_color_poles_1k.jpg"
@@ -129,6 +133,9 @@ function onResize() {
 /*
 // Création de la variable pour charger le model .MTL
 const mtlLoader1 = new THREE.MTLLoader();
+const mtlLoader2 = new THREE.MTLLoader();
+const mtlLoader3 = new THREE.MTLLoader();
+const mtlLoader3 = new THREE.MTLLoader();
 // Chargement du model .MTL depuis la variable modelName et déclaration de la fonction objectMaterial
 mtlLoader1.load('./assets/models/' + modelName + '.mtl', function (objectMaterial) {
     // Prechargement de l'objet
@@ -151,11 +158,6 @@ mtlLoader1.load('./assets/models/' + modelName + '.mtl', function (objectMateria
         _scene.add(object); 
         }); 
     });
-
-
-
-
-
 
 
 
