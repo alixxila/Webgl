@@ -1,8 +1,5 @@
 /////////////////////////////////////////////////////////////////////////TP ThreeJS - Création de Scene////////////////////////////////////////////////////////////////////////////// 
 
-
-
-
 // Déclaration des variables globales
 var _rendu; 
 var _camera;
@@ -60,6 +57,8 @@ var _worldURL = "https://images.unsplash.com/photo-1465101162946-4377e57745c3?ix
 
 //On combine notre sphère et notre matérial juste au dessus pour creér notre Lune 
 var _moon = new THREE.Mesh( _moonSphere, _material);
+
+
 //Création du "Soleil", une light puissante qui émet que d'une seule direction
 const _Soleil = new THREE.DirectionalLight(0xFFFFFF, 1); 
 //La position de la light 
