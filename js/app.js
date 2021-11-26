@@ -10,7 +10,7 @@ var _materielAcharger = [
     ''
 ];
 
-// Variable pour aller chercher texture de la Lune
+// Variable pour aller chercher texture de la Lune et du background
 var _texturePlanet = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/17271/lroc_color_poles_1k.jpg"
 var _motionURL = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/17271/ldem_3_8bit.jpg"
 var _worldURL = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/17271/hipp8_s.jpg"
@@ -51,7 +51,7 @@ var _worldURL = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/17271/hipp8_s.jpg"
         color: 0x9C2E35, //Couleur du material / Mars
         map: _texture, // Application de la texture de Mars
        displacementMap: _motionMap, // Effet de relief
-        displacementScale: 0.06, // Imperfection de la lune à utiliser pour faire des météorites
+        displacementScale: 0.06, // Ajuste la présence de cratère 
         bumpMap: _motionMap,
         bumpScale: 0.09, // Je sais pas vraiment ce que c'est mais si ça dépasse 0.70 c'est vraiment horrible
         reflectivity:1 //Reflet 
@@ -63,7 +63,7 @@ var _worldURL = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/17271/hipp8_s.jpg"
 var _moon = new THREE.Mesh( _moonSphere, _material);
 
 
-//Création du "Soleil", une light puissante qui émet que d'une seule direction
+//Création du "Soleil", une light puissante qui émet que dans une seule direction
 const _Soleil = new THREE.DirectionalLight(0xFFFFFF, 2); 
 //La position de la light 
 _Soleil.position.set(-100, 100,50);
@@ -80,12 +80,14 @@ var _backGround = new THREE.SphereGeometry(1000,60,60);
 // Ajout d'un matérial à la scène 
 var _backGroundMat = new THREE.MeshBasicMaterial (
     {   
-    color: 0xffffff,
+    side:THREE.BackSide,  
     map: _worldTexture,
     }   
 
 );
 
+
+//
 var _world = new THREE.Mesh ( _backGround, _backGroundMat );
 _scene.add( _world );
 
@@ -97,8 +99,11 @@ _moon.rotation.y = 3.14*1.54;
 
 function animate(){
     requestAnimationFrame(animate);
+    //
     _moon.rotation.x = 0.02;
     _moon.rotation.y = 0.02;
+
+    //Animation du background
     _world.rotation.x = 0.02;
     _world.rotation.y = 0.05;
 
@@ -158,24 +163,4 @@ mtlLoader1.load('./assets/models/' + modelName + '.mtl', function (objectMateria
         _scene.add(object); 
         }); 
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* A débugger, l'affichage se fait plus, cherche pk
-//Ainsi que la Lune
-_scene.add( _moon );
-On set la postion de la caméra
-_camera.position.z = 5;
-
-_rendu.render( _scene, _camera);
 */
